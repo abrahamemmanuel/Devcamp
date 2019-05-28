@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc mocha ./src/test/**/**.test.js",
-    "cover": "nyc report --reporter=text-lcov | coveralls && codecov",
+    "cover": "nyc report --reporter=text-lcov | coveralls",
     "dev": "nodemon --exec babel-node ./src/server.js",
     "lint": "eslint **/*.js"
   },
