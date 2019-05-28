@@ -1,4 +1,6 @@
 # add the following to your codecov.yml
+codecov:
+  token: 51f1caa5-3b6d-45f4-9cac-21cde6492859
 parsers:
   javascript:
     enable_partials: yes
