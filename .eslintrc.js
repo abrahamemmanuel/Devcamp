@@ -3,5 +3,8 @@ module.exports = {
     "globals": {
         "describe": "readonly",
         "it": "readonly"
+    },
+    "rules": {
+        "comma-dangle": 0,
     }
 };

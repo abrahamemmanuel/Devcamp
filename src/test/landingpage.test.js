@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../server';
+import app from '../server/server';
 
 describe('landingpage', () => {
   it('Welcomes the user to the landingpage', (done) => {
