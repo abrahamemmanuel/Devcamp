@@ -10,14 +10,14 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
-  <title>Welcome to DevConnector</title>
+  <title>Welcome to DevCamp</title>
 </head>
 
 <body>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
     <div class="container">
-      <a class="navbar-brand" href="landing.html">DevConnector</a>
+      <a class="navbar-brand" href="/">DevCamp</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -32,10 +32,10 @@
 
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="register.html">Sign Up</a>
+            <a class="nav-link" href="/users/register">Sign Up</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="login.html">Login</a>
+            <a class="nav-link" href="/users/login">Login</a>
           </li>
         </ul>
       </div>
@@ -48,20 +48,21 @@
       <div class="row">
         <div class="col-md-8 m-auto">
           <h1 class="display-4 text-center">Sign Up</h1>
-          <p class="lead text-center">Create your DevConnector account</p>
-          <form action="create-profile.html">
+          <p class="lead text-center">Create your DevCamp account</p>
+          <% include ./partials/messages %>
+          <form action="/users/register" method="POST">
             <div class="form-group">
-              <input type="text" class="form-control form-control-lg" placeholder="Name" name="name" required />
+              <input type="text" class="form-control form-control-lg" placeholder="Name" name="name" value="<%= typeof name != 'undefined' ? name : '' %>" required />
             </div>
             <div class="form-group">
-              <input type="email" class="form-control form-control-lg" placeholder="Email Address" name="email" />
+              <input type="email" class="form-control form-control-lg" placeholder="Email Address" name="email" value="<%= typeof email != 'undefined' ? email : '' %>"/>
               <small className="form-text text-muted">This site uses Gravatar so if you want a profile image, use a Gravatar email</small>
             </div>
             <div class="form-group">
-              <input type="password" class="form-control form-control-lg" placeholder="Password" name="password" />
+              <input type="password" class="form-control form-control-lg" placeholder="Password" name="password"  value="<%= typeof password != 'undefined' ? password : '' %>" />
             </div>
             <div class="form-group">
-              <input type="password" class="form-control form-control-lg" placeholder="Confirm Password" name="password2" />
+              <input type="password" class="form-control form-control-lg" placeholder="Confirm Password" name="password2"  value="<%= typeof password2 != 'undefined' ? password2 : '' %>"/>
             </div>
             <input type="submit" class="btn btn-info btn-block mt-4" />
           </form>
@@ -72,7 +73,7 @@
 
   <!-- Footer -->
   <footer class="bg-dark text-white mt-5 p-4 text-center">
-    Copyright &copy; 2018 Dev Connector
+    Copyright &copy; 2019 DevCamp
   </footer>
    <script src="js/bootstrap.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"

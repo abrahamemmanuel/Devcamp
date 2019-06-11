@@ -1,18 +1,18 @@
 import express from 'express';
-import path from 'path';
 import ejs from 'ejs';
 import mongoose from 'mongoose';
 import session from 'express-session';
 import flash from 'connect-flash';
 import passport from 'passport';
 import key from './config/keys';
-import router from './api/api';
+import userRouter from './api/users/routes';
+import profileRouter from './api/profile/routes';
 
 // Create server
 const app = express();
 
-// load api routes
-const api = router;
+// Passport Config
+require('./config/passport')(passport);
 
 // Set static folder
 app.use(express.static('public'));
@@ -34,7 +34,7 @@ app.use(
   })
 );
 
-//Passport middleware
+// Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -55,8 +55,9 @@ const db = process.env.MONGODB_URI || key.LOCALDB_URI;
 // Connect to MongoDB
 mongoose.connect(db, { useNewUrlParser: true }).then(() => console.log('MongoDB Connected...')).catch(err => console.log(err));// eslint-disable-line no-console
 
-// Routes
-app.use('/api', api);
+// Load routes
+app.use(userRouter);
+app.use(profileRouter);
 
 // Get Landing page
 app.get('/', (req, res) => res.status(200).render('landingpage'));
