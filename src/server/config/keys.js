@@ -1,5 +1,5 @@
 const key = {
-  LOCALDB_URI: 'mongodb://localhost:27017/devconnector',
+  LOCALDB_URI: 'mongodb://localhost:27017/devCamp',
   env: process.env.PORT || 5000,
 };
 

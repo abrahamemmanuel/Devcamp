@@ -10,4 +10,4 @@ const profileRouter = express.Router();
 // @methd     GET
 profileRouter.get('/create-profile', ensureAuthenticated, profileController.getProfilePage);
 
-export  default profileRouter;
+export default profileRouter;
