@@ -4,10 +4,16 @@ import profileController from './controllers';
 
 const profileRouter = express.Router();
 
-// @route     /create-profile
-// @descr     Get create-profile page
+// @route     /Profile
+// @descr     Get users profile
 // @acces     Private
 // @methd     GET
-profileRouter.get('/create-profile', ensureAuthenticated, profileController.getProfilePage);
+profileRouter.get('/profile', ensureAuthenticated, profileController.getCurrentUserProfile);
+
+// @route     /Profile
+// @descr     Create or Edit users profile
+// @acces     Private
+// @methd     POST
+profileRouter.post('/profile', ensureAuthenticated, profileController.createUserProfile);
 
 export default profileRouter;
