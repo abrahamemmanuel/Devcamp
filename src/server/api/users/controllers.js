@@ -56,7 +56,7 @@ class UserController {
 										'success_msg',
 										'You are now registered and can log in'
 									);
-									res.redirect('/users/login');
+									res.redirect('/api/users/login');
 								})
 								.catch(err => console.log(err));
 						})
@@ -68,8 +68,8 @@ class UserController {
 
 	login(req, res, next) {
 		passport.authenticate('local', {
-			successRedirect: '/dashboard',
-			failureRedirect: '/users/login',
+			successRedirect: '/api/dashboard',
+			failureRedirect: '/api/users/login',
 			failureFlash: true
 		})(req, res, next);
 	}
@@ -77,7 +77,7 @@ class UserController {
 	logout(req, res) {
 		req.logout();
 		req.flash('success_msg', 'You are logged out');
-		res.redirect('/users/login');
+		res.redirect('/api/users/login');
 	}
 
 	dashboard(req, res) {

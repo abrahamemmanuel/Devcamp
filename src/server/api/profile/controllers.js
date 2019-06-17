@@ -2,11 +2,13 @@
 import mongoose from 'mongoose';
 import Profile from '../../..//database/models/Profile';
 import User from '../../..//database/models/User';
+import validateProfileInput from '../../../utils/validation/profile';
 
 class ProfileCoontroller {
 	getCurrentUserProfile(req, res) {
 		const errors = {};
 		Profile.findOne({ user: req.user.id })
+			.populate('user', ['name', 'avatar'])
 			.then(profile => {
 				if (!profile) {
 					// Add to the errors object
@@ -20,7 +22,14 @@ class ProfileCoontroller {
 	}
 
 	createUserProfile(req, res) {
-		const errors = {};
+    const { errors, isValid } = validateProfileInput(req.body);
+    
+    // Check validation
+    if(!isValid) {
+      // Return any errors with 400 status
+      return res.status(400).json(errors);
+    }
+
 		// Get fields
 		const profileFields = {};
 		profileFileds.user = req.user.id;
@@ -30,8 +39,7 @@ class ProfileCoontroller {
 		if (req.body.location) profileFields.location = req.body.location;
 		if (req.body.bio) profileFields.bio = req.body.bio;
 		if (req.body.status) profileFields.status = req.body.status;
-		if (req.body.githubusername)
-			profileFields.githubusername = req.body.githubusername;
+		if (req.body.githubusername) profileFields.githubusername = req.body.githubusername;	
 		// Skills split into array
 		if (typeof req.body.skills !== 'undefined') {
 			profileFields.skills = req.body.skills.split(',');

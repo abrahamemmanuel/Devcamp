@@ -8,12 +8,12 @@ const profileRouter = express.Router();
 // @descr     Get users profile
 // @acces     Private
 // @methd     GET
-profileRouter.get('/profile', ensureAuthenticated, profileController.getCurrentUserProfile);
+profileRouter.get('/api/profile', ensureAuthenticated, profileController.getCurrentUserProfile);
 
 // @route     /Profile
 // @descr     Create or Edit users profile
 // @acces     Private
 // @methd     POST
-profileRouter.post('/profile', ensureAuthenticated, profileController.createUserProfile);
+profileRouter.post('/api/profile', ensureAuthenticated, profileController.createUserProfile);
 
 export default profileRouter;

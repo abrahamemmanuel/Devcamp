@@ -20,6 +20,11 @@ const UserSchema = mongoose.Schema({
 		required: true
 	},
 
+	isLogin: {
+		type: Boolean,
+		default: false
+	},
+
 	date: {
 		type: Date,
 		default: Date.now

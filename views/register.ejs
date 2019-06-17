@@ -32,10 +32,10 @@
 
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/users/register">Sign Up</a>
+            <a class="nav-link" href="/api/users/register">Sign Up</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/users/login">Login</a>
+            <a class="nav-link" href="/api/users/login">Login</a>
           </li>
         </ul>
       </div>
@@ -50,7 +50,7 @@
           <h1 class="display-4 text-center">Sign Up</h1>
           <p class="lead text-center">Create your DevCamp account</p>
           <% include ./partials/messages %>
-          <form action="/users/register" method="POST">
+          <form action="/api/users/register" method="POST">
             <div class="form-group">
               <input type="text" class="form-control form-control-lg" placeholder="Name" name="name" value="<%= typeof name != 'undefined' ? name : '' %>" required />
             </div>
