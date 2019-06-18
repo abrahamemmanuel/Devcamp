@@ -6,6 +6,10 @@ import User from '../../../database/models/User';
 import validateRegisterInput from '../../../utils/validation/register';
 
 class UserController {
+  getIndexPage(req, res) {
+		res.status(200).render('index', { user: req.user });
+	}
+
 	getLoginPage(req, res) {
 		res.status(200).render('login');
 	}
@@ -75,13 +79,22 @@ class UserController {
 	}
 
 	logout(req, res) {
+		const id = req.user.id;
+		// Find logged in user by id and update isLogin value
+		User.findByIdAndUpdate(id, { $set: { isLogin: false } }, {new: true })
+		 .then(user => res.status(200))
+		 .catch(err => console.log(err));
 		req.logout();
 		req.flash('success_msg', 'You are logged out');
 		res.redirect('/api/users/login');
 	}
 
 	dashboard(req, res) {
-		res.status(200).render('dashboard');
+		const id = req.user.id;
+	 // Find logged in user by id and update isLogin value
+	 User.findByIdAndUpdate(id, { $set: { isLogin: true } }, {new: true })
+		.then(user => res.status(200).render('dashboard', {user: req.user} ))
+		.catch(err => console.log(err));
 	}
 }
 

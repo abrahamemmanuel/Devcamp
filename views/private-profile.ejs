@@ -14,10 +14,10 @@
 </head>
 
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
+ <!-- Navbar -->
+ <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
     <div class="container">
-      <a class="navbar-brand" href="landing.html">DevConnector</a>
+      <a class="navbar-brand" href="/index">DevCamp</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -25,19 +25,29 @@
       <div class="collapse navbar-collapse" id="mobile-nav">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link" href="profiles.html"> Developers
+            <a class="nav-link" href="#"> Developers
             </a>
           </li>
         </ul>
 
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="register.html">Sign Up</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="login.html">Login</a>
-          </li>
-        </ul>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+                Post Feed
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/api/dashboard">
+                Dashboard
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/api/logout">
+                <img class="rounded-circle" style="width: 25px;margin-right:5px" src="https://www.gravatar.com/avatar/anything?s=200&d=mm"
+                  alt="" title="You must have a Gravatar connected to your email to display an image" /> Logout
+              </a>
+            </li>
+          </ul>
       </div>
     </div>
   </nav>
@@ -49,8 +59,8 @@
         <div class="col-md-12">
           <div class="row">
             <div class="col-6">
-                <a href="edit-profile.html" class="btn btn-light">
-                <i class="fas fa-user-circle text-info mr-1"></i>Profile</a>
+                <a href="/api/edit-profile" class="btn btn-light mb-2">
+                <i class="fas fa-user-circle text-info mr-1"></i>Edit Profile</a>
             </div>
             <div class="col-6">
 
@@ -63,14 +73,14 @@
               <div class="card card-body bg-info text-white mb-3">
                 <div class="row">
                   <div class="col-4 col-md-3 m-auto">
-                    <img class="rounded-circle" src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200" alt="" />
+                    <img class="rounded-circle" src="<%=profile.user.avatar%>" alt="" />
                   </div>
                 </div>
                 <div class="text-center">
-                  <h1 class="display-4 text-center">John Doe</h1>
-                  <p class="lead text-center">Developer at Microsoft</p>
-                  <p>Seattle, WA</p>
+                  <h1 class="display-4 text-center"><%=profile.handle%></h1>
+                  <p class="lead text-center">Devloper at <%=profile.company%></p>
                   <p>
+                    
                     <a class="text-white p-2" href="#">
                       <i class="fas fa-globe fa-2x"></i>
                     </a>
@@ -96,25 +106,17 @@
           <div class="row">
             <div class="col-md-12">
               <div class="card card-body bg-light mb-3">
-                <h3 class="text-center text-info">John's Bio</h3>
-                <p class="lead">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident fuga cum necessitatibus blanditiis vel,
-                  officia facere porro esse numquam assumenda doloremque saepe aliquam nemo excepturi aliquid maiores! Excepturi,
-                  libero repudiandae.
-                </p>
+                <h3 class="text-center text-info"><%=profile.handle%>'s Bio</h3>
+                <p class="lead"><%=profile.bio%></p>
                 <hr />
                 <h3 class="text-center text-info">Skill Set</h3>
                 <div class="row">
                   <div class="d-flex flex-wrap justify-content-center align-items-center">
+                    <% profile.skills.forEach(function(skill){%>
                     <div class="p-3">
-                      <i class="fa fa-check"></i> HTML</div>
-                    <div class="p-3">
-                      <i class="fa fa-check"></i> CSS</div>
-                    <div class="p-3">
-                      <i class="fa fa-check"></i> JavaScript</div>
-                    <div class="p-3">
-                      <i class="fa fa-check"></i> Python</div>
-                    <div class="p-3">
-                      <i class="fa fa-check"></i> C#</div>
+                      <i class="fa fa-check"></i> <%=skill%>
+                    </div>
+                    <% }); %>
                   </div>
                 </div>
               </div>
@@ -122,7 +124,7 @@
           </div>
 
           <!-- Profile Creds -->
-          <div class="row">
+         <!-- <div class="row">
             <div class="col-md-6">
               <h3 class="text-center text-info">Experience</h3>
               <ul class="list-group">
@@ -169,7 +171,7 @@
             </div>
           </div>
 
-          <!-- Profile Github -->
+          <!-- Profile Github 
           <div ref="myRef">
             <hr />
             <h3 class="mb-4">Latest Github Repos</h3>

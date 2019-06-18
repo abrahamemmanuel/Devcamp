@@ -7,6 +7,7 @@ import passport from 'passport';
 import key from './config/keys';
 import userRouter from './api/users/routes';
 import profileRouter from './api/profile/routes';
+import User from '../database/models/User';
 
 // Create server
 const app = express();
@@ -51,6 +52,9 @@ app.use((req, res, next) => {
 
 // DB Config
 const db = process.env.MONGODB_URI || key.LOCALDB_URI;
+
+// Set useFindAndModify to false
+mongoose.set('useFindAndModify', false);
 
 // Connect to MongoDB
 mongoose.connect(db, { useNewUrlParser: true }).then(() => console.log('MongoDB Connected...')).catch(err => console.log(err));// eslint-disable-line no-console

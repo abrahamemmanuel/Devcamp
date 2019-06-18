@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import NumberInt from 'mongoose-int32';
+
 
 const UserSchema = mongoose.Schema({
 	name: {

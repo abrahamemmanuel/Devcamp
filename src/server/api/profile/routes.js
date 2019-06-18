@@ -10,6 +10,7 @@ const profileRouter = express.Router();
 // @methd     GET
 profileRouter.get('/api/profile', ensureAuthenticated, profileController.getCurrentUserProfile);
 
+
 // @route     /Profile
 // @descr     Create or Edit users profile
 // @acces     Private

@@ -13,9 +13,9 @@ class ProfileCoontroller {
 				if (!profile) {
 					// Add to the errors object
 					errors.noprofile = "You don't have a profile yet";
-					return res.status(404).render('create-profile', { errors });
+					return res.status(400).render('create-profile', { errors });
 				} else {
-					return res.status(200).json(profile);
+					return res.status(200).render('private-profile', { profile });
 				}
 			})
 			.catch(err => res.status(501).json(err));
@@ -27,14 +27,14 @@ class ProfileCoontroller {
     // Check validation
     if(!isValid) {
       // Return any errors with 400 status
-      return res.status(400).json(errors);
+      return res.status(400).redirect('/api/profile', { errors });
     }
 
 		// Get fields
 		const profileFields = {};
-		profileFileds.user = req.user.id;
+		profileFields.user = req.user.id;
 		if (req.body.handle) profileFields.handle = req.body.handle;
-		if (req.body.comapany) profileFields.comapany = req.body.comapany;
+		if (req.body.comapany) profileFields.company = req.body.company;
 		if (req.body.website) profileFields.website = req.body.website;
 		if (req.body.location) profileFields.location = req.body.location;
 		if (req.body.bio) profileFields.bio = req.body.bio;
@@ -53,7 +53,9 @@ class ProfileCoontroller {
 		if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
 		if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
 
-		Profile.findOne({ user: req.user.id }).then(profile => {
+		Profile.findOne({ user: req.user.id })
+		  .populate('user', ['name', 'avatar'])
+		  .then(profile => {
 			if (profile) {
 				// Update
 				Profile.findOneAndUpdate(
@@ -75,7 +77,7 @@ class ProfileCoontroller {
 					// Save Profile
 					new Profile(profileFields)
 						.save()
-						.then(profile => res.status(200).json(profile));
+						.then(profile => res.status(200).render('private-profile', { profile }));
 				});
 			}
 		});

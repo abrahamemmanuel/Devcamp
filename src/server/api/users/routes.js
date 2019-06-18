@@ -40,4 +40,10 @@ userRouter.get('/api/dashboard', ensureAuthenticated, userController.dashboard);
 // @method   POST
 userRouter.get('/api/logout', userController.logout);
 
+// @route   '/index
+// @desc     Logout User
+// @access   Private
+// @method   GET
+userRouter.get('/index', ensureAuthenticated, userController.getIndexPage);
+
 export default userRouter;
