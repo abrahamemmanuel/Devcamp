@@ -62,7 +62,7 @@ class ProfileCoontroller {
 					{ user: req.user.id },
 					{ $set: profileFields },
 					{ new: true }
-				).then(profile => res.json(profile));
+				).then(profile => res.status(200).render('private-profile', { profile }));
 			} else {
 				//Create
 
@@ -71,8 +71,8 @@ class ProfileCoontroller {
 					if (profile) {
 						// Add to errors
 						errors.handle = 'That handle already exist';
-						return res.status(400).json(errors);
-					}
+						return res.status(400).render('create-profile', { errors });
+					} 
 
 					// Save Profile
 					new Profile(profileFields)
