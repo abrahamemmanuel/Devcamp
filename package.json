@@ -6,8 +6,13 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc mocha ./src/test/**/**.test.js",
     "cover": "nyc report --reporter=text-lcov | coveralls",
-    "dev": "nodemon --exec babel-node ./src/server/server.js",
-    "lint": "eslint **/*.js"
+    "dev": "nodemon ./build/server/server.js --exec babel-node",
+    "lint": "eslint **/*.js",
+    "clean": "rm -rf build && mkdir build",
+    "build-babel": "babel -d ./build ./src -s",
+    "build": "npm run clean && npm run build-babel",
+    "start": "npm run build && node ./build/server/server.js",
+    "heroku-postbuild": "npm install"
   },
   "author": "",
   "license": "ISC",
