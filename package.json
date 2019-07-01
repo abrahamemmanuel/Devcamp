@@ -6,7 +6,6 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test nyc mocha ./src/test/**/**.test.js",
     "cover": "nyc report --reporter=text-lcov | coveralls",
-    "dev": "nodemon ./build/server/server.js --exec babel-node",
     "lint": "eslint **/*.js",
     "clean": "rm -rf build && mkdir build",
     "build-babel": "babel -d ./build ./src -s",
@@ -14,7 +13,7 @@
     "start": "npm run build && nodemon ./build/server/server.js",
     "heroku-postbuild": "npm install"
   },
-  "author": "",
+  "author": "Emmanuel",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
