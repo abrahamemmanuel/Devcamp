@@ -88,6 +88,7 @@ class ProfileCoontroller {
           });
         }
       });
+
   }
 
   getExperiencePage(req, res) {
@@ -97,6 +98,10 @@ class ProfileCoontroller {
   getEducationPage(req, res) {
     res.status(200).render('add-education');
   }
+
+  // addEdu(req, res) {
+  //   const 
+  // }
 }
 
 const profileController = new ProfileCoontroller();
