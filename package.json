@@ -13,7 +13,7 @@
     "start": "npm run build && nodemon ./build/server/server.js",
     "heroku-postbuild": "npm install"
   },
-  "author": "Emmanuel",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
