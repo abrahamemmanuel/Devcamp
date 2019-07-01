@@ -149,7 +149,10 @@ function () {
     key: "getEducationPage",
     value: function getEducationPage(req, res) {
       res.status(200).render('add-education');
-    }
+    } // addEdu(req, res) {
+    //   const 
+    // }
+
   }]);
 
   return ProfileCoontroller;
