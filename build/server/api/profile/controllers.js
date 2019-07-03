@@ -149,10 +149,32 @@ function () {
     key: "getEducationPage",
     value: function getEducationPage(req, res) {
       res.status(200).render('add-education');
-    } // addEdu(req, res) {
-    //   const 
-    // }
+    }
+  }, {
+    key: "addEdu",
+    value: function addEdu(req, res) {
+      // Find loggedin user by id
+      _Profile.default.findOne({
+        user: req.user.id
+      }).then(function (profile) {
+        // create new Education object
+        var newEdu = {
+          school: req.body.school,
+          degree: req.body.degree,
+          fieldofstudy: req.body.fieldofstudy,
+          from: req.body.from,
+          to: req.body.to,
+          current: req.body.current,
+          description: req.body.description // Add to edu array
 
+        };
+        profile.education.unshift(newEdu); // Save
+
+        profile.save().then(function (profile) {
+          return res.status(200).redirect('/api/dashboard');
+        });
+      });
+    }
   }]);
 
   return ProfileCoontroller;
