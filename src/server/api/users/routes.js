@@ -28,11 +28,11 @@ userRouter.post('/api/users/register', userController.registerUser);
 // @methd     POST
 userRouter.post('/api/users/login', userController.login);
 
-// @route     /dashboard
-// @descr     Get dashboard
+// @route     /api/users/updateAuth
+// @descr     Update user loggin status
 // @acces     Private
-// @methd     GET
-userRouter.get('/api/dashboard', ensureAuthenticated, userController.dashboard);
+// @methd     UPDATE
+userRouter.get('/api/users/updateAuth', ensureAuthenticated, userController.isLoggedIn);
 
 // @route   '/logout
 // @desc     Logout User

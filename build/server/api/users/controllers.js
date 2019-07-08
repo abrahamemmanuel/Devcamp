@@ -13,6 +13,8 @@ var _gravatar = _interopRequireDefault(require("gravatar"));
 
 var _User = _interopRequireDefault(require("../../../database/models/User"));
 
+var _Profile = _interopRequireDefault(require("../../../database/models/Profile"));
+
 var _register = _interopRequireDefault(require("../../../utils/validation/register"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -121,7 +123,7 @@ function () {
     key: "login",
     value: function login(req, res, next) {
       _passport.default.authenticate('local', {
-        successRedirect: '/api/dashboard',
+        successRedirect: '/api/users/updateAuth',
         failureRedirect: '/api/users/login',
         failureFlash: true
       })(req, res, next);
@@ -148,20 +150,16 @@ function () {
       res.redirect('/api/users/login');
     }
   }, {
-    key: "dashboard",
-    value: function dashboard(req, res) {
-      var id = req.user.id; // Find logged in user by id and update isLogin value
-
-      _User.default.findByIdAndUpdate(id, {
+    key: "isLoggedIn",
+    value: function isLoggedIn(req, res) {
+      _User.default.findByIdAndUpdate(req.user.id, {
         $set: {
           isLogin: true
         }
       }, {
         new: true
       }).then(function (user) {
-        return res.status(200).render('dashboard', {
-          user: req.user
-        });
+        return res.status(200).redirect('/api/profile/dashboard');
       }).catch(function (err) {
         return console.log(err);
       });

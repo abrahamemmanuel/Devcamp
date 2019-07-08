@@ -99,7 +99,7 @@ class ProfileCoontroller {
     res.status(200).render('add-education');
   }
 
-  addEdu(req, res) {
+  addEducation(req, res) {
     // Find loggedin user by id
     Profile.findOne({ user: req.user.id })
       .then(profile => {
@@ -117,10 +117,36 @@ class ProfileCoontroller {
         // Add to edu array
         profile.education.unshift(newEdu);
 
-        // Save
-        profile.save().then(profile => res.status(200).redirect('/api/dashboard'))
-
+        profile.save().then(profile => res.redirect('/api/profile/dashboard'))
       });
+  }
+
+  addExperience(req, res) {
+    // Find loggedin user by id
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        // create new Education object
+        const newExp = {
+          title: req.body.title,
+          company: req.body.company,
+          location: req.body.location,
+          from: req.body.from,
+          to: req.body.to,
+          current: req.body.current,
+          description: req.body.description
+        }
+
+        // Add to exp array
+        profile.experience.unshift(newExp);
+
+        profile.save().then(profile => res.redirect('/api/profile/dashboard'))
+      });
+  }
+
+  dashboard(req, res) {
+    Profile.findOne({ user: req.user.id })
+      .populate('user', ['name', 'isLoggedIn'])
+      .then(profile => res.status(200).render('dashboard', { profile }))
   }
 }
 

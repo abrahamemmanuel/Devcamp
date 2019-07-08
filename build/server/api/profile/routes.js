@@ -39,7 +39,17 @@ profileRouter.get('/api/profile/experience', _auth.ensureAuthenticated, _control
 // @acces     Private
 // @methd     GET
 
-profileRouter.get('/api/profile/education', _auth.ensureAuthenticated, _controllers.default.getEducationPage);
+profileRouter.get('/api/profile/education', _auth.ensureAuthenticated, _controllers.default.getEducationPage); // @route     /api/profile/education
+// @descr     Get add education
+// @acces     Private
+// @methd     POST
+
+profileRouter.post('/api/profile/education', _auth.ensureAuthenticated, _controllers.default.addEducation); // @route     /api/profile/education
+// @descr     Get add education
+// @acces     Private
+// @methd     POST
+
+profileRouter.get('/api/profile/dashboard', _auth.ensureAuthenticated, _controllers.default.dashboard);
 var _default = profileRouter;
 exports.default = _default;
 //# sourceMappingURL=routes.js.map

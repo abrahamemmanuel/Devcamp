@@ -27,7 +27,7 @@ var UserSchema = _mongoose.default.Schema({
     type: String,
     required: true
   },
-  isLogin: {
+  isLoggedIn: {
     type: Boolean,
     default: false
   },

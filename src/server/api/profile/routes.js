@@ -19,9 +19,9 @@ profileRouter.post('/api/profile', ensureAuthenticated, profileController.create
 
 
 // @route     /api/edit-profile
-// @descr     Create or Edit users profile
+// @descr     Get edit-profile page
 // @acces     Private
-// @methd     POST
+// @methd     GET
 profileRouter.get('/api/edit-profile', ensureAuthenticated, profileController.editProfile);
 
 
@@ -37,5 +37,26 @@ profileRouter.get('/api/profile/experience', ensureAuthenticated, profileControl
 // @acces     Private
 // @methd     GET
 profileRouter.get('/api/profile/education', ensureAuthenticated, profileController.getEducationPage);
+
+
+// @route     /api/profile/education
+// @descr     Add education to profile object
+// @acces     Private
+// @methd     POST
+profileRouter.post('/api/profile/education', ensureAuthenticated, profileController.addEducation);
+
+
+// @route     /api/profile/education
+// @descr     Add experience to profile object
+// @acces     Private
+// @methd     POST
+profileRouter.post('/api/profile/experience', ensureAuthenticated, profileController.addExperience);
+
+
+// @route     /api/profile/education
+// @descr     Get add education
+// @acces     Private
+// @methd     POST
+profileRouter.get('/api/profile/dashboard', ensureAuthenticated, profileController.dashboard);
 
 export default profileRouter;

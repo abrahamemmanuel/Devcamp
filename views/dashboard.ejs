@@ -25,7 +25,7 @@
           <div class="col-md-12">
             <h1 class="display-4">Dashboard</h1>
             <p class="lead text-muted">Welcome
-              <%= user.name %>
+              <%= profile.user.name %>
             </p>
             <!-- Dashboard Actions -->
             <div class="btn-group mb-4" role="group">
@@ -53,7 +53,9 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Tech Guy Web Solutions</td>
+                    <td>Tech Guy Web Solutions
+
+                    </td>
                     <td>Senior Developer</td>
                     <td>
                       02-03-2009 - 01-02-2014
@@ -93,8 +95,11 @@
                   </tr>
                 </thead>
                 <tbody>
+
                   <tr>
-                    <td>Northern Essex</td>
+                    <td>
+                      <%=profile.education[0].school%>
+                    </td>
                     <td>Associates</td>
                     <td>
                       02-03-2007 - 01-02-2009
@@ -106,6 +111,7 @@
                     </td>
                   </tr>
                 </tbody>
+
               </table>
             </div>
 

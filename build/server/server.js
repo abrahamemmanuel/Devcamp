@@ -50,7 +50,7 @@ app.use((0, _expressSession.default)({
 })); // Passport middleware
 
 app.use(_passport.default.initialize());
-app.use(_passport.default.session()); // Connect flashhero
+app.use(_passport.default.session()); // Connect flash
 
 app.use((0, _connectFlash.default)()); // Global Vars
 

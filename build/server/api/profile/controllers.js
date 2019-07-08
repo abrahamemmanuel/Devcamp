@@ -151,8 +151,8 @@ function () {
       res.status(200).render('add-education');
     }
   }, {
-    key: "addEdu",
-    value: function addEdu(req, res) {
+    key: "addEducation",
+    value: function addEducation(req, res) {
       // Find loggedin user by id
       _Profile.default.findOne({
         user: req.user.id
@@ -168,10 +168,20 @@ function () {
           description: req.body.description // Add to edu array
 
         };
-        profile.education.unshift(newEdu); // Save
-
+        profile.education.unshift(newEdu);
         profile.save().then(function (profile) {
-          return res.status(200).redirect('/api/dashboard');
+          return res.redirect('/api/profile/dashboard');
+        });
+      });
+    }
+  }, {
+    key: "dashboard",
+    value: function dashboard(req, res) {
+      _Profile.default.findOne({
+        user: req.user.id
+      }).populate('user', ['name', 'isLoggedIn']).then(function (profile) {
+        return res.status(200).render('dashboard', {
+          profile: profile
         });
       });
     }
