@@ -92,11 +92,35 @@ class ProfileCoontroller {
   }
 
   getExperiencePage(req, res) {
-    res.status(200).render('add-experience');
+    const errors = {};
+    Profile.findOne({ user: req.user.id })
+      .populate('user', ['name', 'avatar'])
+      .then(profile => {
+        if (!profile) {
+          // Add to the errors object
+          errors.noprofile = "You don't have a profile yet";
+          return res.status(400).render('create-profile', { errors });
+        } else {
+          return res.status(200).render('add-experience', { profile });
+        }
+      })
+      .catch(err => res.status(501).json(err));
   }
 
   getEducationPage(req, res) {
-    res.status(200).render('add-education');
+    const errors = {};
+    Profile.findOne({ user: req.user.id })
+      .populate('user', ['name', 'avatar'])
+      .then(profile => {
+        if (!profile) {
+          // Add to the errors object
+          errors.noprofile = "You don't have a profile yet";
+          return res.status(400).render('create-profile', { errors });
+        } else {
+          return res.status(200).render('add-education', { profile });
+        }
+      })
+      .catch(err => res.status(501).json(err));
   }
 
   addEducation(req, res) {
@@ -145,7 +169,7 @@ class ProfileCoontroller {
 
   dashboard(req, res) {
     Profile.findOne({ user: req.user.id })
-      .populate('user', ['name', 'isLoggedIn'])
+      .populate('users', ['name', 'isLoggedIn'])
       .then(profile => res.status(200).render('dashboard', { profile }))
   }
 }

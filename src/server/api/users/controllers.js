@@ -92,7 +92,7 @@ class UserController {
 
 	isLoggedIn(req, res) {
 		User.findByIdAndUpdate(req.user.id, { $set: { isLogin: true } }, { new: true })
-			.then(user => res.status(200).redirect('/api/profile/dashboard'))
+			.then(user => res.status(200).redirect('dashboard', { user: req.user }))
 			.catch(err => console.log(err));
 	}
 }
