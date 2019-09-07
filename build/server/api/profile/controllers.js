@@ -35,17 +35,15 @@ function () {
 
       _Profile.default.findOne({
         user: req.user.id
-      }).populate('user', ['name', 'avatar']).then(function (profile) {
+      }).populate("user", ["name", "avatar"]).then(function (profile) {
         if (!profile) {
           // Add to the errors object
           errors.noprofile = "You don't have a profile yet";
-          return res.status(400).render('create-profile', {
+          return res.status(400).render("create-profile", {
             errors: errors
           });
         } else {
-          return res.status(200).render('private-profile', {
-            profile: profile
-          });
+          return res.redirect("/api/profile/dashboard");
         }
       }).catch(function (err) {
         return res.status(501).json(err);
@@ -56,8 +54,8 @@ function () {
     value: function editProfile(req, res) {
       _Profile.default.findOne({
         user: req.user.id
-      }).populate('user', ['name', 'avatar']).then(function (profile) {
-        return res.status(200).render('edit-profile', {
+      }).populate("user", ["name", "avatar"]).then(function (profile) {
+        return res.render("edit-profile", {
           profile: profile
         });
       });
@@ -72,7 +70,7 @@ function () {
 
       if (!isValid) {
         // Return any errors with 400 status
-        return res.status(400).redirect('/api/profile', {
+        return res.redirect("create-profile", {
           errors: errors
         });
       } // Get fields
@@ -88,8 +86,8 @@ function () {
       if (req.body.status) profileFields.status = req.body.status;
       if (req.body.githubusername) profileFields.githubusername = req.body.githubusername; // Skills split into array
 
-      if (typeof req.body.skills !== 'undefined') {
-        profileFields.skills = req.body.skills.split(',');
+      if (typeof req.body.skills !== "undefined") {
+        profileFields.skills = req.body.skills.split(",");
       } // Social
 
 
@@ -102,7 +100,7 @@ function () {
 
       _Profile.default.findOne({
         user: req.user.id
-      }).populate('user', ['name', 'avatar']).then(function (profile) {
+      }).populate("user", ["name", "avatar"]).then(function (profile) {
         if (profile) {
           // Update
           _Profile.default.findOneAndUpdate({
@@ -112,7 +110,7 @@ function () {
           }, {
             new: true
           }).then(function (profile) {
-            return res.status(200).render('edit-profile', {
+            return res.status(200).render("edit-profile", {
               profile: profile
             });
           });
@@ -124,15 +122,15 @@ function () {
           }).then(function (profile) {
             if (profile) {
               // Add to errors
-              errors.handle = 'That handle already exist';
-              return res.status(400).render('create-profile', {
+              errors.handle = "That handle already exist";
+              return res.render("create-profile", {
                 errors: errors
               });
             } // Save Profile
 
 
             new _Profile.default(profileFields).save().then(function (profile) {
-              return res.status(200).render('private-profile', {
+              return res.redirect("/api/profile/user", {
                 profile: profile
               });
             });
@@ -143,16 +141,119 @@ function () {
   }, {
     key: "getExperiencePage",
     value: function getExperiencePage(req, res) {
-      res.status(200).render('add-experience');
+      var errors = {};
+
+      _Profile.default.findOne({
+        user: req.user.id
+      }).populate("user", ["name", "avatar"]).then(function (profile) {
+        if (!profile) {
+          // Add to the errors object
+          errors.noprofile = "You don't have a profile yet";
+          return res.status(400).render("create-profile", {
+            errors: errors
+          });
+        } else {
+          return res.status(200).render("add-experience", {
+            profile: profile
+          });
+        }
+      }).catch(function (err) {
+        return res.status(501).json(err);
+      });
     }
   }, {
     key: "getEducationPage",
     value: function getEducationPage(req, res) {
-      res.status(200).render('add-education');
-    } // addEdu(req, res) {
-    //   const 
-    // }
+      var errors = {};
 
+      _Profile.default.findOne({
+        user: req.user.id
+      }).populate("user", ["name", "avatar"]).then(function (profile) {
+        if (!profile) {
+          // Add to the errors object
+          errors.noprofile = "You don't have a profile yet";
+          return res.status(400).render("create-profile", {
+            errors: errors
+          });
+        } else {
+          return res.status(200).render("add-education", {
+            profile: profile
+          });
+        }
+      }).catch(function (err) {
+        return res.status(501).json(err);
+      });
+    }
+  }, {
+    key: "addEducation",
+    value: function addEducation(req, res) {
+      // Find loggedin user by id
+      _Profile.default.findOne({
+        user: req.user.id
+      }).then(function (profile) {
+        // create new Education object
+        var newEdu = {
+          school: req.body.school,
+          degree: req.body.degree,
+          fieldofstudy: req.body.fieldofstudy,
+          from: req.body.from,
+          to: req.body.to,
+          current: req.body.current,
+          description: req.body.description
+        }; // Add to edu array
+
+        profile.education.unshift(newEdu);
+        profile.save().then(function (profile) {
+          return res.render("dashboard", profile.education);
+        });
+      });
+    }
+  }, {
+    key: "addExperience",
+    value: function addExperience(req, res) {
+      // Find loggedin user by id
+      _Profile.default.findOne({
+        user: req.user.id
+      }).then(function (profile) {
+        // create new Education object
+        var newExp = {
+          title: req.body.title,
+          company: req.body.company,
+          location: req.body.location,
+          from: req.body.from,
+          to: req.body.to,
+          current: req.body.current,
+          description: req.body.description
+        }; // Add to exp array
+
+        profile.experience.unshift(newExp);
+        profile.save().then(function (profile) {
+          return res.render("dashboard", profile.experience);
+        });
+      });
+    }
+  }, {
+    key: "dashboard",
+    value: function dashboard(req, res) {
+      _Profile.default.findOne({
+        user: req.user.id
+      }).populate("user", ["name", "isLoggedIn"]).then(function (profile) {
+        return res.status(200).render("dashboard", {
+          profile: profile
+        });
+      });
+    }
+  }, {
+    key: "getUserProfile",
+    value: function getUserProfile(req, res) {
+      _Profile.default.findOne({
+        user: req.user.id
+      }).populate("user", ["name", "isLoggedIn"]).then(function (profile) {
+        return res.status(200).render("private-profile", {
+          profile: profile
+        });
+      });
+    }
   }]);
 
   return ProfileCoontroller;

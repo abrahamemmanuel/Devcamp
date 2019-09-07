@@ -3,10 +3,11 @@ import passport from 'passport';
 import bcrypt from 'bcryptjs';
 import gravatar from 'gravatar';
 import User from '../../../database/models/User';
+import Profile from '../../../database/models/Profile';
 import validateRegisterInput from '../../../utils/validation/register';
 
 class UserController {
-  getIndexPage(req, res) {
+	getIndexPage(req, res) {
 		res.status(200).render('index', { user: req.user });
 	}
 
@@ -72,7 +73,7 @@ class UserController {
 
 	login(req, res, next) {
 		passport.authenticate('local', {
-			successRedirect: '/api/dashboard',
+			successRedirect: '/api/users/updateAuth',
 			failureRedirect: '/api/users/login',
 			failureFlash: true
 		})(req, res, next);
@@ -81,20 +82,20 @@ class UserController {
 	logout(req, res) {
 		const id = req.user.id;
 		// Find logged in user by id and update isLogin value
-		User.findByIdAndUpdate(id, { $set: { isLogin: false } }, {new: true })
-		 .then(user => res.status(200))
-		 .catch(err => console.log(err));
+		User.findByIdAndUpdate(id, { $set: { isLogin: false } }, { new: true })
+			.then(user => res.status(200))
+			.catch(err => console.log(err));
 		req.logout();
 		req.flash('success_msg', 'You are logged out');
 		res.redirect('/api/users/login');
 	}
 
-	dashboard(req, res) {
+	isLoggedIn(req, res) {
 		const id = req.user.id;
-	 // Find logged in user by id and update isLogin value
-	 User.findByIdAndUpdate(id, { $set: { isLogin: true } }, {new: true })
-		.then(user => res.status(200).render('dashboard', {user: req.user} ))
-		.catch(err => console.log(err));
+		// Find logged in user by id and update isLogin value
+		User.findByIdAndUpdate(id, { $set: { isLogin: true } }, { new: true })
+			.then(user => res.status(200).redirect('/api/profile'))
+			.catch(err => console.log(err));
 	}
 }
 

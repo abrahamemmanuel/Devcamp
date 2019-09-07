@@ -34,12 +34,12 @@ userRouter.post('/api/users/register', _controllers.default.registerUser); // @r
 // @acces     Private
 // @methd     POST
 
-userRouter.post('/api/users/login', _controllers.default.login); // @route     /dashboard
-// @descr     Get dashboard
+userRouter.post('/api/users/login', _controllers.default.login); // @route     /api/users/updateAuth
+// @descr     Update user loggin status
 // @acces     Private
-// @methd     GET
+// @methd     UPDATE
 
-userRouter.get('/api/dashboard', _auth.ensureAuthenticated, _controllers.default.dashboard); // @route   '/logout
+userRouter.get('/api/users/updateAuth', _auth.ensureAuthenticated, _controllers.default.isLoggedIn); // @route   '/logout
 // @desc     Logout User
 // @access   Private
 // @method   POST

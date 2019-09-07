@@ -1,21 +1,21 @@
 /* eslint-disable class-methods-use-this */
-import mongoose from 'mongoose';
-import Profile from '../../..//database/models/Profile';
-import User from '../../..//database/models/User';
-import validateProfileInput from '../../../utils/validation/profile';
+import mongoose from "mongoose";
+import Profile from "../../..//database/models/Profile";
+import User from "../../..//database/models/User";
+import validateProfileInput from "../../../utils/validation/profile";
 
 class ProfileCoontroller {
   getCurrentUserProfile(req, res) {
     const errors = {};
     Profile.findOne({ user: req.user.id })
-      .populate('user', ['name', 'avatar'])
+      .populate("user", ["name", "avatar"])
       .then(profile => {
         if (!profile) {
           // Add to the errors object
           errors.noprofile = "You don't have a profile yet";
-          return res.status(400).render('create-profile', { errors });
+          return res.status(400).render("create-profile", { errors });
         } else {
-          return res.status(200).render('private-profile', { profile });
+          return res.redirect("/api/profile/dashboard");
         }
       })
       .catch(err => res.status(501).json(err));
@@ -23,8 +23,8 @@ class ProfileCoontroller {
 
   editProfile(req, res) {
     Profile.findOne({ user: req.user.id })
-      .populate('user', ['name', 'avatar'])
-      .then(profile => res.status(200).render('edit-profile', { profile }));
+      .populate("user", ["name", "avatar"])
+      .then(profile => res.render("edit-profile", { profile }));
   }
 
   createUserProfile(req, res) {
@@ -33,7 +33,7 @@ class ProfileCoontroller {
     // Check validation
     if (!isValid) {
       // Return any errors with 400 status
-      return res.status(400).redirect('/api/profile', { errors });
+      return res.redirect("create-profile", { errors });
     }
 
     // Get fields
@@ -45,10 +45,11 @@ class ProfileCoontroller {
     if (req.body.location) profileFields.location = req.body.location;
     if (req.body.bio) profileFields.bio = req.body.bio;
     if (req.body.status) profileFields.status = req.body.status;
-    if (req.body.githubusername) profileFields.githubusername = req.body.githubusername;
+    if (req.body.githubusername)
+      profileFields.githubusername = req.body.githubusername;
     // Skills split into array
-    if (typeof req.body.skills !== 'undefined') {
-      profileFields.skills = req.body.skills.split(',');
+    if (typeof req.body.skills !== "undefined") {
+      profileFields.skills = req.body.skills.split(",");
     }
 
     // Social
@@ -60,16 +61,17 @@ class ProfileCoontroller {
     if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
 
     Profile.findOne({ user: req.user.id })
-      .populate('user', ['name', 'avatar'])
+      .populate("user", ["name", "avatar"])
       .then(profile => {
         if (profile) {
-
           // Update
           Profile.findOneAndUpdate(
             { user: req.user.id },
             { $set: profileFields },
             { new: true }
-          ).then(profile => res.status(200).render('edit-profile', { profile }));
+          ).then(profile =>
+            res.status(200).render("edit-profile", { profile })
+          );
         } else {
           //Create
 
@@ -77,31 +79,108 @@ class ProfileCoontroller {
           Profile.findOne({ handle: profileFields.handle }).then(profile => {
             if (profile) {
               // Add to errors
-              errors.handle = 'That handle already exist';
-              return res.status(400).render('create-profile', { errors });
+              errors.handle = "That handle already exist";
+              return res.render("create-profile", { errors });
             }
 
             // Save Profile
             new Profile(profileFields)
               .save()
-              .then(profile => res.status(200).render('private-profile', { profile }));
+              .then(profile => res.redirect("/api/profile/user", { profile }));
           });
         }
       });
-
   }
 
   getExperiencePage(req, res) {
-    res.status(200).render('add-experience');
+    const errors = {};
+    Profile.findOne({ user: req.user.id })
+      .populate("user", ["name", "avatar"])
+      .then(profile => {
+        if (!profile) {
+          // Add to the errors object
+          errors.noprofile = "You don't have a profile yet";
+          return res.status(400).render("create-profile", { errors });
+        } else {
+          return res.status(200).render("add-experience", { profile });
+        }
+      })
+      .catch(err => res.status(501).json(err));
   }
 
   getEducationPage(req, res) {
-    res.status(200).render('add-education');
+    const errors = {};
+    Profile.findOne({ user: req.user.id })
+      .populate("user", ["name", "avatar"])
+      .then(profile => {
+        if (!profile) {
+          // Add to the errors object
+          errors.noprofile = "You don't have a profile yet";
+          return res.status(400).render("create-profile", { errors });
+        } else {
+          return res.status(200).render("add-education", { profile });
+        }
+      })
+      .catch(err => res.status(501).json(err));
   }
 
-  // addEdu(req, res) {
-  //   const 
-  // }
+  addEducation(req, res) {
+    // Find loggedin user by id
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      // create new Education object
+      const newEdu = {
+        school: req.body.school,
+        degree: req.body.degree,
+        fieldofstudy: req.body.fieldofstudy,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+      };
+
+      // Add to edu array
+      profile.education.unshift(newEdu);
+
+      profile
+        .save()
+        .then(profile => res.render("dashboard", profile.education));
+    });
+  }
+
+  addExperience(req, res) {
+    // Find loggedin user by id
+    Profile.findOne({ user: req.user.id }).then(profile => {
+      // create new Education object
+      const newExp = {
+        title: req.body.title,
+        company: req.body.company,
+        location: req.body.location,
+        from: req.body.from,
+        to: req.body.to,
+        current: req.body.current,
+        description: req.body.description
+      };
+
+      // Add to exp array
+      profile.experience.unshift(newExp);
+
+      profile
+        .save()
+        .then(profile => res.render("dashboard", profile.experience));
+    });
+  }
+
+  dashboard(req, res) {
+    Profile.findOne({ user: req.user.id })
+      .populate("user", ["name", "isLoggedIn"])
+      .then(profile => res.status(200).render("dashboard", { profile }));
+  }
+
+  getUserProfile(req, res) {
+    Profile.findOne({ user: req.user.id })
+      .populate("user", ["name", "isLoggedIn"])
+      .then(profile => res.status(200).render("private-profile", { profile }));
+  }
 }
 
 const profileController = new ProfileCoontroller();

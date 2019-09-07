@@ -39,7 +39,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Connect flashhero
+// Connect flash
 app.use(flash());
 
 // Global Vars
