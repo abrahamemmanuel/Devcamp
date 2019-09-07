@@ -15,126 +15,91 @@
 </head>
 
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-4">
-    <div class="container">
-      <a class="navbar-brand" href="/index">DevCamp</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mobile-nav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
+  <!-- Nav Bar -->
+  <% include ./partials/navbar %>
 
-      <div class="collapse navbar-collapse" id="mobile-nav">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#"> Developers
-            </a>
-          </li>
-        </ul>
+    <!-- Profile -->
+    <div class="profile">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-6">
+                <a href="/api/edit-profile" class="btn btn-light mb-2">
+                  <i class="fas fa-user-circle text-info mr-1"></i>Edit Profile</a>
+              </div>
+              <div class="col-6">
 
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="#">
-              Post Feed
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/api/dashboard">
-              Dashboard
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/api/logout">
-              <img class="rounded-circle" style="width: 25px;margin-right:5px" src="https://www.gravatar.com/avatar/anything?s=200&d=mm"
-                alt="" title="You must have a Gravatar connected to your email to display an image" /> Logout
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Profile -->
-  <div class="profile">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-6">
-              <a href="/api/edit-profile" class="btn btn-light mb-2">
-                <i class="fas fa-user-circle text-info mr-1"></i>Edit Profile</a>
-            </div>
-            <div class="col-6">
-
-            </div>
-          </div>
-
-          <!-- Profile Header -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card card-body bg-info text-white mb-3">
-                <div class="row">
-                  <div class="col-4 col-md-3 m-auto">
-                    <img class="rounded-circle" src="<%=profile.user.avatar%>" alt="" />
-                  </div>
-                </div>
-                <div class="text-center">
-                  <h1 class="display-4 text-center">
-                    <%=profile.handle%>
-                  </h1>
-                  <p class="lead text-center">
-                    <%=profile.status%> at
-                      <%=profile.company%>
-                  </p>
-                  <p>
-
-                    <a class="text-white p-2" href="<%=profile.website%>">
-                      <i class="fas fa-globe fa-2x"></i>
-                    </a>
-                    <a class="text-white p-2" href="<%=profile.social.twitter%>">
-                      <i class="fab fa-twitter fa-2x"></i>
-                    </a>
-                    <a class="text-white p-2" href="<%=profile.social.facebook%>">
-                      <i class="fab fa-facebook fa-2x"></i>
-                    </a>
-                    <a class="text-white p-2" href="<%=profile.social.linkedin%>">
-                      <i class="fab fa-linkedin fa-2x"></i>
-                    </a>
-                    <a class="text-white p-2" href="<%=profile.social.instagram%>">
-                      <i class="fab fa-instagram fa-2x"></i>
-                    </a>
-                  </p>
-                </div>
               </div>
             </div>
-          </div>
 
-          <!-- Profile About -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card card-body bg-light mb-3">
-                <h3 class="text-center text-info">
-                  <%=profile.handle%>'s Bio</h3>
-                <p class="lead">
-                  <%=profile.bio%>
-                </p>
-                <hr />
-                <h3 class="text-center text-info">Skill Set</h3>
-                <div class="row">
-                  <div class="d-flex flex-wrap justify-content-center align-items-center">
-                    <% profile.skills.forEach(function(skill){%>
-                      <div class="p-3">
-                        <i class="fa fa-check"></i>
-                        <%=skill%>
-                      </div>
-                      <% }); %>
+            <!-- Profile Header -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card card-body bg-info text-white mb-3">
+                  <div class="row">
+                    <div class="col-4 col-md-3 m-auto">
+                      <img class="rounded-circle" src="<%=profile.user.avatar%>" alt="" />
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <h1 class="display-4 text-center">
+                      <%=profile.handle%>
+                    </h1>
+                    <p class="lead text-center">
+                      <%=profile.status%> at
+                        <%=profile.company%>
+                    </p>
+                    <p>
+
+                      <a class="text-white p-2" href="<%=profile.website%>" target="_blank">
+                        <i class="fas fa-globe fa-2x"></i>
+                      </a>
+                      <a class="text-white p-2" href="<%=profile.social.twitter%>">
+                        <i class="fab fa-twitter fa-2x"></i>
+                      </a>
+                      <a class="text-white p-2" href="<%=profile.social.facebook%>">
+                        <i class="fab fa-facebook fa-2x"></i>
+                      </a>
+                      <a class="text-white p-2" href="<%=profile.social.linkedin%>">
+                        <i class="fab fa-linkedin fa-2x"></i>
+                      </a>
+                      <a class="text-white p-2" href="<%=profile.social.instagram%>">
+                        <i class="fab fa-instagram fa-2x"></i>
+                      </a>
+                    </p>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Profile Creds -->
-          <!-- <div class="row">
+            <!-- Profile About -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="card card-body bg-light mb-3">
+                  <h3 class="text-center text-info">
+                    <%=profile.handle%>'s Bio</h3>
+                  <p class="lead">
+                    <%=profile.bio%>
+                  </p>
+                  <hr />
+                  <h3 class="text-center text-info">Skill Set</h3>
+                  <div class="row">
+                    <div class="d-flex flex-wrap justify-content-center align-items-center">
+                      <% profile.skills.forEach(function(skill){%>
+                        <div class="p-3">
+                          <i class="fa fa-check"></i>
+                          <%=skill%>
+                        </div>
+                        <% }); %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Profile Creds -->
+            <!-- <div class="row">
             <div class="col-md-6">
               <h3 class="text-center text-info">Experience</h3>
               <ul class="list-group">
@@ -215,16 +180,16 @@
   </div>
 
   <!-- Footer -->
-          <footer class="bg-dark text-white mt-5 p-4 text-center">
-            Copyright &copy; 2019 DevCamp
-          </footer>
-          <script src="js/bootstrap.min.js"></script>
-          <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+            <footer class="bg-dark text-white mt-5 p-4 text-center">
+              Copyright &copy; 2019 DevCamp
+            </footer>
+            <script src="js/bootstrap.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+              crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+              crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+              crossorigin="anonymous"></script>
 </body>
 
 </html>

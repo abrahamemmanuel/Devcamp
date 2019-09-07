@@ -152,14 +152,16 @@ function () {
   }, {
     key: "isLoggedIn",
     value: function isLoggedIn(req, res) {
-      _User.default.findByIdAndUpdate(req.user.id, {
+      var id = req.user.id; // Find logged in user by id and update isLogin value
+
+      _User.default.findByIdAndUpdate(id, {
         $set: {
           isLogin: true
         }
       }, {
         new: true
       }).then(function (user) {
-        return res.status(200).redirect('/api/profile/dashboard');
+        return res.status(200).redirect('/api/profile');
       }).catch(function (err) {
         return console.log(err);
       });

@@ -91,8 +91,10 @@ class UserController {
 	}
 
 	isLoggedIn(req, res) {
-		User.findByIdAndUpdate(req.user.id, { $set: { isLogin: true } }, { new: true })
-			.then(user => res.status(200).redirect('dashboard', { user: req.user }))
+		const id = req.user.id;
+		// Find logged in user by id and update isLogin value
+		User.findByIdAndUpdate(id, { $set: { isLogin: true } }, { new: true })
+			.then(user => res.status(200).redirect('/api/profile'))
 			.catch(err => console.log(err));
 	}
 }
